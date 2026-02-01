@@ -65,22 +65,10 @@ COLOR_JITTER_PARAMS = {
     'saturation': 0.3,
     'hue': 0.1
 }
-GAUSSIAN_BLUR_PARAMS = {
-    'kernel_size': 3,
-    'sigma': (0.1, 2.0)
-}
+
 RANDOM_GRAYSCALE_PROB = 0.1
 
 # Normalization parameters (RescueNet dataset statistics)
 NORMALIZE_MEAN = [0.5258, 0.5168, 0.4771]
 NORMALIZE_STD = [0.2401, 0.2334, 0.2320]
 
-# Training parameters
-ACCUMULATION_STEPS = 2
-GRAD_CLIP_MAX_NORM = 1.0
-WEIGHT_DECAY = 1e-4
-
-# Scheduler parameters
-COSINE_ANNEALING_T0 = 50
-COSINE_ANNEALING_T_MULT = 2
-COSINE_ANNEALING_ETA_MIN = 1e-6
