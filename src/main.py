@@ -44,7 +44,6 @@ def create_data_loaders():
         mask_dir=cfg.TRAIN_MASK_DIR,
         image_transform=train_image_transform,
         mask_transform=train_mask_transform,
-        augment=True,
     )
 
     val_dataset = RescueNetDataset(
@@ -52,7 +51,6 @@ def create_data_loaders():
         mask_dir=cfg.VAL_MASK_DIR,
         image_transform=val_image_transform,
         mask_transform=val_mask_transform,
-        augment=False
     )
 
     test_dataset = RescueNetDataset(
@@ -60,7 +58,6 @@ def create_data_loaders():
         mask_dir=cfg.TEST_MASK_DIR,
         image_transform=val_image_transform,
         mask_transform=val_mask_transform,
-        augment=False
     )
 
     # Create data loaders
@@ -110,27 +107,6 @@ def setup_model_and_optimizer():
     # Move class weights to device
     class_weights = cfg.CLASS_WEIGHTS.to(cfg.device)
 
-    # Set print options for better output formatting
-    torch.set_printoptions(linewidth=1000)
-
-    # Initialize loss function
-    criterion = AdaptiveCombinedLoss(class_weights, cfg.NUM_EPOCHS)
-
-    # Initialize optimizer
-    optimizer = torch.optim.AdamW(
-        model.parameters(),
-        lr=cfg.LEARNING_RATE,
-        weight_decay=cfg.WEIGHT_DECAY
-    )
-
-    # Initialize scheduler
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
-        optimizer,
-        T_0=cfg.COSINE_ANNEALING_T0,  # Initial period
-        T_mult=cfg.COSINE_ANNEALING_T_MULT,  # Period multiplier
-        eta_min=cfg.COSINE_ANNEALING_ETA_MIN
-    )
-
     return model, criterion, optimizer, scheduler
 
 
@@ -153,30 +129,7 @@ def main():
     print("Loading training metrics...")
     metrics_df = load_training_metrics(cfg.EXCEL_METRICS_PATH)
 
-    # Training state initialization
-    checkpoint_path = cfg.CHECKPOINT_PATH
-    best_iou = 0.0
-    start_epoch = 0
-    train_losses = []
-    val_losses = []
-    val_ious = []
-    no_improve = 0
-
-    # Load checkpoint if exists
-    if os.path.exists(checkpoint_path):
-        checkpoint = load_checkpoint(checkpoint_path, model, optimizer)
-        if checkpoint:
-            start_epoch = checkpoint['epoch'] + 1
-            best_iou = checkpoint.get('best_iou', 0.0)
-            train_losses = checkpoint.get('train_losses', [])
-            val_losses = checkpoint.get('val_losses', [])
-            val_ious = checkpoint.get('val_ious', [])
-            print(f"Resuming training from epoch {start_epoch}")
-
-    print("Starting training...")
-    print("-" * 100)
-
-    # Training loop
+   
     for epoch in range(start_epoch, cfg.NUM_EPOCHS):
         current_epoch = epoch + 1
         print(f"Epoch {current_epoch}/{cfg.NUM_EPOCHS}:")
