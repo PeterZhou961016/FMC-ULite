@@ -16,7 +16,7 @@ FMC-ULite is an efficient semantic segmentation model designed for disaster scen
 
 5.Adaptive Loss Function: Combines CrossEntropy and Dice loss with adaptive weighting during training
 
-Model Architecture
+##Model Architecture
 
 The FMC-ULite architecture consists of:
 
@@ -30,13 +30,13 @@ The FMC-ULite architecture consists of:
 
 5.Output Segmentation Head: Produces final semantic segmentation masks
 
-Installation
+##Installation
 Prerequisites
 Python 3.8 or higher
 
 CUDA-compatible GPU (recommended for training)
 
-Dependencies
+##Dependencies
 The main dependencies are:
 
 torch>=2.0.0
@@ -55,62 +55,36 @@ tqdm>=4.65.0
 
 See requirements.txt for complete dependency list.
 
-Project Structure
+##Project Structure
 
 FMC-ULite/
 
 ├── config.py                    # Configuration parameters and hyperparameters
-
 ├── main.py                      # Main training and evaluation script
-
 ├── requirements.txt             # Python dependencies
-
 ├── README.md                    # This file
-
 ├── model/                       # Model architecture components
-
 │   ├── __init__.py
-
 │   ├── attention.py             # Attention mechanisms (DisasterAttentionGate)
-
 │   ├── fft_fusion.py           # FFT processing modules
-
 │   ├── fusion_modules.py       # Multi-scale fusion blocks
-
 │   └── unet_mobilenet.py       # Main UNet with MobileNetV3 backbone
-
 ├── data/                        # Data handling modules
-
 │   ├── __init__.py
-
 │   ├── dataset.py              # RescueNetDataset class
-
 │   └── transforms.py           # Data augmentation and transformations
-
 ├── loss/                        # Loss functions
-
 │   ├── __init__.py
-
 │   └── adaptive_loss.py        # AdaptiveCombinedLoss implementation
-
 ├── train/                       # Training modules
-
 │   ├── __init__.py
-
 │   ├── trainer.py              # Training logic
-
 │   ├── validator.py            # Validation logic
-
 │   └── tester.py               # Testing and evaluation
-
 └── utils/                       # Utility functions
-
-    ├── __init__.py
-    
-    ├── metrics.py              # Evaluation metrics (IoU calculation)
-    
+    ├── __init__.py    
+    ├── metrics.py              # Evaluation metrics (IoU calculation)    
     ├── visualization.py        # Visualization tools
-    
     └── checkpoint.py           # Model checkpoint management
     
 
@@ -118,23 +92,14 @@ Data Preparation
 The model expects data in the following structure:
 
 RescueNet/
-
 ├── trainset/
-
 │   ├── images/         # Training images (*.jpg)
-
 │   └── masks/          # Training masks (*_lab.png)
-
 ├── validationset/
-
 │   ├── images/         # Validation images
-
 │   └── masks/          # Validation masks
-
 └── testset/
-
     ├── images/         # Test images
-    
     └── masks/          # Test masks
 
 
