@@ -60,6 +60,7 @@ See requirements.txt for complete dependency list.
 
 Project Structure
 -----------------
+```
 FMC-ULite/
 ├── config.py                    
 ├── main.py                      
@@ -87,11 +88,12 @@ FMC-ULite/
     ├── __init__.py     
     ├── metrics.py              
     ├── visualization.py        
-    └── checkpoint.py       
+    └── checkpoint.py
+```     
     
 Data Preparation
 The model expects data in the following structure:
-
+```
 RescueNet/
 ├── trainset/
 │   ├── images/         
@@ -102,7 +104,7 @@ RescueNet/
 └── testset/
     ├── images/         
     └── masks/          
-
+```
 Maintenance
 --------------------------------
 This project is actively maintained with the following commitment:
